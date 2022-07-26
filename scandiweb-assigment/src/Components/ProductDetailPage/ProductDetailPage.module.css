@@ -1,0 +1,218 @@
+.ProductDetailPage {
+  margin: 80px 0;
+}
+
+.ProductWrapper {
+  display: flex;
+}
+
+.ProductPhoto {
+  display: flex;
+  margin-right: 100px;
+}
+
+.GalleryWrapper {
+  max-height: 511px;
+  margin-right: 40px;
+  width: 80px;
+}
+
+.Gallery {
+  display: flex;
+  flex-direction: column;
+  overflow: auto;
+  width: 100%;
+  height: 100%;
+}
+
+.Gallery::-webkit-scrollbar,
+.ProductDescription::-webkit-scrollbar {
+  width: 0;
+  position: absolute;
+}
+
+.GalleryItem {
+  width: 80px;
+  height: 80px;
+  margin-bottom: 40px;
+  text-align: center;
+  cursor: pointer;
+}
+
+.Gallery img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SelectedPhoto {
+  height: 511px;
+  max-width: 610px;
+  width: 610px;
+}
+
+.SelectedPhoto img {
+  height: 100%;
+  width: 100%;
+  object-fit: contain;
+}
+
+.ProductInfo {
+  width: 292px;
+}
+
+.ProductBrand {
+  font-weight: 600;
+  font-size: 30px;
+  line-height: 27px;
+  color: #1d1f22;
+  margin-bottom: 16px;
+}
+
+.ProductName {
+  font-weight: 400;
+  font-size: 30px;
+  line-height: 27px;
+  color: #1d1f22;
+}
+
+.ProductAttributes {
+  margin-top: 43px;
+}
+
+.AttrbuteValues {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.AttrbuteValue {
+  margin: 8px 12px 8px 0;
+}
+
+.AttrbuteLabel {
+  width: 100%;
+  height: 100%;
+}
+
+.AttributeBox {
+  border: 1px solid #1d1f22;
+  font-family: "Source Sans Pro";
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 18px;
+  letter-spacing: 0.05em;
+  color: #1d1f22;
+  cursor: pointer;
+  padding: 13px 23px;
+  width: 100%;
+  text-align: center;
+  transition: 0.3s;
+}
+
+.AttributeIinput:checked + .AttributeBox,
+.AttributeIinput:hover + .AttributeBox {
+  background: #1d1f22;
+  color: #fff;
+}
+
+.ColorWrapper {
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  margin-right: 12px;
+  transition: 0.2s;
+  z-index: -1;
+}
+
+.Color {
+  padding: 0;
+  width: 32px;
+  height: 32px;
+  border: #dadada 1px solid;
+  position: relative;
+}
+
+.AttrbuteValue.Color:hover {
+  border: none;
+}
+
+.Color:hover .ColorWrapper {
+  border: greenyellow 1px solid;
+  width: 36px;
+  height: 36px;
+}
+
+.AttrbuteName,
+.ProductPrice p {
+  text-transform: uppercase;
+  font-family: "Roboto Condensed";
+  font-style: normal;
+  font-weight: 700;
+  font-size: 18px;
+  line-height: 18px;
+  color: #1d1f22;
+}
+
+.PriceInfo {
+  display: flex;
+  font-weight: 700;
+  font-size: 24px;
+  line-height: 46px;
+  color: #1d1f22;
+  margin-top: 10px;
+}
+
+.AddToCart {
+  width: 100%;
+}
+
+.AddToCart button {
+  width: 100%;
+  height: 52px;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 120%;
+  text-transform: uppercase;
+  color: #ffffff;
+  background: #5ece7b;
+  border: none;
+  transition: 0.3s;
+  cursor: pointer;
+  margin-top: 20px;
+}
+
+.AddToCart button:hover {
+  background: #4aa362;
+}
+
+.AddToCart button:disabled,
+button[disabled] {
+  background-color: #e0e0e0;
+  color: #8d8f9a;
+  cursor: no-drop;
+}
+
+.ProductDescription {
+  margin-top: 40px;
+  max-height: 103px;
+  overflow: auto;
+}
+
+.ProductDescription p,
+.ProductDescription h1 {
+  font-family: "Roboto";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 159.96%;
+  color: #1d1f22;
+  margin-bottom: 8px;
+}
+
+.ProductDescription h1 {
+  font-weight: 700;
+}

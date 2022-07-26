@@ -1,0 +1,36 @@
+.Currency {
+  position: relative;
+  margin-right: 22px;
+  position: relative;
+  min-width: 38px;
+}
+
+.Select {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  width: 100%;
+  color: #1d1f22;
+  padding-left: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+}
+
+.Select:focus {
+  outline: none;
+}
+
+.Arrow {
+  position: absolute;
+  top: 0px;
+  right: 0;
+}
+
+@keyframes fadeIn {
+  0% {
+    opacity: 0;
+  }
+  100% {
+    opacity: 1;
+  }
+}

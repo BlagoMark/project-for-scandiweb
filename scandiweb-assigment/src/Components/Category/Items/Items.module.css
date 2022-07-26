@@ -1,0 +1,106 @@
+.Items {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 103px 40px;
+  margin-top: 103px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.Item {
+  padding: 16px;
+  min-height: 444px;
+  transition: 0.3s;
+  position: relative;
+}
+
+.Item:hover {
+  box-shadow: 0px 4px 35px rgba(168, 172, 176, 0.19);
+}
+
+.Photo {
+  overflow: hidden;
+  max-height: 330px;
+  height: 100%;
+  width: 100%;
+  margin-bottom: 24px;
+  position: relative;
+}
+
+.Photo img {
+  height: 100%;
+  width: 100%;
+  object-fit: cover;
+}
+
+.Name h3 {
+  font-weight: 300;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.Price {
+  font-weight: 500;
+  font-size: 18px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.OutOfStock .Photo img {
+  position: relative;
+  opacity: 0.5;
+}
+
+.OutOfStock .Name h3,
+.OutOfStock .Price {
+  color: #8d8f9a;
+}
+
+.OutOfStock .SoldOut {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-weight: 400;
+  font-size: 24px;
+  line-height: 160%;
+  text-align: center;
+  color: #8d8f9a;
+}
+
+.AddToCart {
+  border-radius: 100%;
+  width: 42px;
+  height: 42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background: #5ece7b;
+  border: none;
+  cursor: pointer;
+  bottom: 72px;
+  right: 31px;
+  position: absolute;
+  visibility: hidden;
+  opacity: 0;
+  transition: visibility 0s, opacity 0.5s, width, heigth linear;
+  opacity: 0;
+  transition: 0.3s;
+}
+
+.Item:hover .AddToCart {
+  visibility: visible;
+  opacity: 1;
+  width: 52px;
+  height: 52px;
+}
+
+.AddToCart img {
+  filter: brightness(100);
+  width: 24px;
+  height: 24px;
+}

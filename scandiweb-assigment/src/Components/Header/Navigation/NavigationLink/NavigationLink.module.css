@@ -1,0 +1,37 @@
+.NavigationLink {
+  display: inline-block;
+  height: 100%;
+  padding: 0 16px;
+  text-decoration: none;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 120%;
+  color: #1d1f22;
+  transition: all 0.2s;
+  position: relative;
+  text-transform: uppercase;
+}
+
+.isActive {
+  font-weight: 600;
+  color: #5ece7b;
+}
+
+.NavigationLink::after {
+  content: "";
+  position: absolute;
+  width: 100%;
+  transform: scaleX(0);
+  height: 2px;
+  bottom: 0;
+  left: 0;
+  background-color: #5ece7b;
+  transform-origin: bottom right;
+  transition: transform 0.25s ease-out;
+}
+
+.NavigationLink:hover::after,
+.NavigationLink.isActive::after {
+  transform: scale(1);
+  transform-origin: bottom left;
+}

@@ -1,25 +1,40 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { PureComponent } from "react";
+import Categories from "./Components/Categoties/Categoties";
+import Header from "./Components/Header/Header";
+import "./App.css";
+import ProductDetailPage from "./Components/ProductDetailPage/ProductDetailPage";
+import { Route, Routes } from "react-router-dom";
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+class App extends PureComponent {
+  state = {
+    currency: { label: "USD", symbol: "$" },
+  };
+
+  onCurrencyChange = (selected) => {
+    this.setState({ currency: selected });
+  };
+
+  render() {
+    return (
+      <>
+        <Header
+          client={this.props.client}
+          onCurrencyChange={this.onCurrencyChange}
+          currency={this.state.currency}
+        />
+        <Routes>
+          <Route
+            path="/*"
+            element={<Categories currency={this.state.currency} />}
+          />
+          <Route
+            path="/product/:id"
+            element={<ProductDetailPage currency={this.state.currency} />}
+          />
+        </Routes>
+      </>
+    );
+  }
 }
 
 export default App;
