@@ -8,7 +8,11 @@ class Category extends PureComponent {
       <div className={s.Category}>
         <div className="container">
           <div className={s.CategoryName}>{this.props.name}</div>
-          <Items name={this.props.name} currency={this.props.currency} />
+          <Items
+            onAddedToCart={this.props.onAddedToCart}
+            name={this.props.name}
+            currency={this.props.currency}
+          />
         </div>
       </div>
     );

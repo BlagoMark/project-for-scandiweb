@@ -12,17 +12,17 @@ class CurrencyList extends PureComponent {
   render() {
     return this.props.open ? (
       <div className={s.Items}>
-        {this.props.currencies.map((el) => (
-          <div key={el.label}>
+        {this.props.currencies.map((currency) => (
+          <div key={currency.label}>
             <div className={s.Option}>
               <button
                 onClick={() =>
                   this.hundleOnClick({
-                    symbol: el.symbol,
-                    label: el.label,
+                    symbol: currency.symbol,
+                    label: currency.label,
                   })
                 }
-              >{`${el.symbol} ${el.label}`}</button>
+              >{`${currency.symbol} ${currency.label}`}</button>
             </div>
           </div>
         ))}

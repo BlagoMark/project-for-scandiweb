@@ -3,6 +3,7 @@ import { PureComponent } from "react";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
 import Cart from "../../../Assets/img/Cart.svg";
 import s from "./Actions.module.css";
+import { NavLink } from "react-router-dom";
 
 class Actions extends PureComponent {
   render() {
@@ -16,6 +17,8 @@ class Actions extends PureComponent {
           <button>
             <img src={Cart} alt="Cart" />
           </button>
+          <div className={s.CartCount}></div>
+          <NavLink to={"/cart"}>Cart</NavLink>
         </div>
       </div>
     );

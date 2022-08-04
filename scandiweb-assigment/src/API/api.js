@@ -7,6 +7,7 @@ export const GET_PRODUCTS = gql`
       products {
         id
         name
+        brand
         gallery
         inStock
         prices {
@@ -14,6 +15,13 @@ export const GET_PRODUCTS = gql`
           currency {
             label
             symbol
+          }
+        }
+        attributes {
+          id
+          items {
+            displayValue
+            value
           }
         }
       }
@@ -51,6 +59,7 @@ export const GET_PRODUCT = gql`
         id
         items {
           displayValue
+          value
         }
       }
       prices {

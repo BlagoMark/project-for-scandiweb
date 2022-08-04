@@ -1,22 +1,25 @@
+import { gql } from "@apollo/client";
 import { Query } from "@apollo/client/react/components";
 import React, { PureComponent } from "react";
 import { GET_PRODUCT } from "../../API/api";
 import s from "./ProductDetailPage.module.css";
+import ProductPhoto from "./ProductPhoto/ProductPhoto";
 
 class ProductDetailPage extends PureComponent {
-  state = {
-    SelectedPhoto: 0,
-  };
-
-  onSelectedPhotoChange = (index) => {
-    this.setState({ SelectedPhoto: index });
-  };
-
   getId = () => {
     return this._reactInternals.return.memoizedProps.value.matches[0].params.id;
   };
-
   parse = require("html-react-parser");
+
+  componentDidMount = () => {
+    this.getProduct = GET_PRODUCT;
+  };
+
+  componentWillUnmount() {
+    this.getProduct = null;
+  }
+
+  getProduct = null;
 
   render() {
     return (
@@ -28,76 +31,96 @@ class ProductDetailPage extends PureComponent {
           if (error) {
             return "Error...";
           }
+          this.setState({ attributes: data.product.attributes });
           const currencyIndex = data.product.prices.findIndex(
-            (el) => el.currency.label === this.props.currency.label
+            (price) => price.currency.label === this.props.currency.label
           );
           return (
-            <div className={s.ProductDetailPage}>
+            <div className={s.ProductDetailPage} key={data.product.id}>
               <div className={"container " + s.ProductWrapper}>
-                <div className={s.ProductPhoto}>
-                  <div className={s.GalleryWrapper}>
-                    <div className={s.Gallery}>
-                      {data.product.gallery.map((el, index) => (
-                        <div
-                          className={s.GalleryItem}
-                          onClick={() => this.onSelectedPhotoChange(index)}
-                        >
-                          <img src={el} alt="" />
-                        </div>
-                      ))}
-                    </div>
-                  </div>
-                  <div className={s.SelectedPhoto}>
-                    <img
-                      src={data.product.gallery[this.state.SelectedPhoto]}
-                      alt=""
+                <ProductPhoto gallery={data.product.gallery} />
+                <form className={s.ProductInfo} name={this.getId()}>
+                  <div className={s.ProductBrand}>
+                    {data.product.brand}
+                    <input
+                      type={"hidden"}
+                      name="ProductBrand"
+                      value={data.product.brand}
                     />
                   </div>
-                </div>
-                <div className={s.ProductInfo}>
-                  <div className={s.ProductBrand}>{data.product.brand}</div>
-                  <div className={s.ProductName}>{data.product.name}</div>
+                  <div className={s.ProductName}>
+                    {data.product.name}
+                    <input
+                      type={"hidden"}
+                      name="ProductName"
+                      value={data.product.name}
+                    />
+                  </div>
                   <div className={s.ProductAttributes}>
-                    {data.product.attributes.map((el) => (
-                      <>
-                        <div className={s.AttrbuteName}>{el.id}:</div>
+                    {data.product.attributes.map((attribute) => (
+                      <div key={attribute.id}>
+                        <div className={s.AttrbuteName}>{attribute.id}:</div>
                         <div className={s.AttrbuteValues}>
-                          {el.items.map((item) =>
-                            el.id === "Color" ? (
-                              <div
-                                className={`${s.AttrbuteValue} ${s.Color}`}
-                                style={{ background: item.displayValue }}
-                              >
-                                <div className={s.ColorWrapper}></div>
-                              </div>
-                            ) : el.id === "Size" ? (
-                              <div className={`${s.AttrbuteValue}`}>
-                                {/* {item.displayValue} */}
-                                <label className={s.AttrbuteLabel}>
-                                  <input
-                                    style={{ display: "none" }}
-                                    type="radio"
-                                    name="tab-input"
-                                    className={s.AttributeIinput}
-                                  />
-                                  <div className={s.AttributeBox}>
-                                    {item.displayValue}
-                                  </div>
-                                </label>
-                              </div>
-                            ) : (
-                              <div className={`${s.AttrbuteValue}`}>
-                                {item.displayValue}
-                              </div>
-                            )
-                          )}
+                          <fieldset id={attribute.id}>
+                            {attribute.items.map((item) =>
+                              attribute.id === "Color" ? (
+                                <div
+                                  key={item.value}
+                                  className={`${s.AttrbuteValue} ${s.Color}`}
+                                >
+                                  <label className={s.AttrbuteLabel}>
+                                    <input
+                                      style={{ display: "none" }}
+                                      type={"radio"}
+                                      name={attribute.id}
+                                      value={item.value}
+                                      required
+                                      className={s.AttributeIinput}
+                                    />
+                                    <div
+                                      className={s.AttributeBox}
+                                      style={{ background: item.value }}
+                                    ></div>
+                                  </label>
+                                  <div className={s.ColorWrapper}></div>
+                                </div>
+                              ) : (
+                                <div
+                                  className={`${s.AttrbuteValue}`}
+                                  key={item.value}
+                                >
+                                  <label className={s.AttrbuteLabel}>
+                                    <input
+                                      style={{ display: "none" }}
+                                      type={"radio"}
+                                      name={attribute.id}
+                                      value={item.value}
+                                      required
+                                      className={s.AttributeIinput}
+                                    />
+                                    <div className={s.AttributeBox}>
+                                      {item.value}
+                                    </div>
+                                  </label>
+                                </div>
+                              )
+                            )}
+                          </fieldset>
                         </div>
-                      </>
+                      </div>
                     ))}
                   </div>
                   <div className={s.ProductPrice}>
                     <p>Price:</p>
                     <div className={s.PriceInfo}>
+                      <input
+                        type="hidden"
+                        value={
+                          data.product.prices[currencyIndex].amount +
+                          data.product.prices[currencyIndex].currency.label
+                        }
+                        name="Price"
+                      />
                       {`${data.product.prices[currencyIndex].currency.symbol}
                       ${data.product.prices[currencyIndex].amount}`}
                     </div>
@@ -105,17 +128,20 @@ class ProductDetailPage extends PureComponent {
                   <div className={s.AddToCart}>
                     <button
                       disabled={!data.product.inStock}
-                      onClick={() => {
-                        console.log(data.product.inStock);
+                      onClick={(e) => {
+                        e.preventDefault();
+                        this.props.onAddedToCart(data.product);
                       }}
                     >
                       ADD TO CART
                     </button>
                   </div>
-                  <div className={s.ProductDescription}>
-                    {this.parse(data.product.description)}
+                  <div className={s.ProductDescriptionWrapper}>
+                    <div className={s.ProductDescription}>
+                      {this.parse(data.product.description)}
+                    </div>
                   </div>
-                </div>
+                </form>
               </div>
             </div>
           );

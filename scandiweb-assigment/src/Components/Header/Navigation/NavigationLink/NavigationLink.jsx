@@ -4,7 +4,6 @@ import { NavLink } from "react-router-dom";
 import s from "./NavigationLink.module.css";
 
 class NavigationLink extends PureComponent {
-  active = { color: "#5ece7b" };
   render() {
     return (
       <NavLink

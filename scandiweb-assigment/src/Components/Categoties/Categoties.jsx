@@ -18,12 +18,16 @@ class Categories extends PureComponent {
           }
           return (
             <Routes>
-              {data.categories.map((el) => (
+              {data.categories.map((category) => (
                 <Route
-                  key={el.name}
-                  path={`/${el.name}`}
+                  key={category.name}
+                  path={`/${category.name}`}
                   element={
-                    <Category currency={this.props.currency} name={el.name} />
+                    <Category
+                      onAddedToCart={this.props.onAddedToCart}
+                      currency={this.props.currency}
+                      name={category.name}
+                    />
                   }
                 />
               ))}

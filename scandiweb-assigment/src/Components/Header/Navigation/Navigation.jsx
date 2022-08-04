@@ -18,8 +18,14 @@ class Navigation extends PureComponent {
           }
           return (
             <nav className={s.Navigation}>
-              {data.categories.map((el) => {
-                return <NavigationLink path={el.name} name={el.name} />;
+              {data.categories.map((category) => {
+                return (
+                  <NavigationLink
+                    path={category.name}
+                    key={category.name}
+                    name={category.name}
+                  />
+                );
               })}
             </nav>
           );
