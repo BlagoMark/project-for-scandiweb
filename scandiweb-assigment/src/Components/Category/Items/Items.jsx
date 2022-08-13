@@ -1,11 +1,21 @@
 import React, { PureComponent } from "react";
-import { GET_PRODUCTS } from "../../../API/api";
+import { GET_PRODUCT, GET_PRODUCTS } from "../../../API/api";
 import { Query } from "@apollo/client/react/components";
 import { NavLink } from "react-router-dom";
 import Cart from "../../../Assets/img/Cart.svg";
 import s from "./Items.module.css";
+import { client } from "../../..";
 
 class Items extends PureComponent {
+  getProductForAddingToCart = async (id) => {
+    let data = await client.query({
+      query: GET_PRODUCT,
+      variables: { id: id },
+    });
+    let product = data.data.product;
+    this.props.onAddedToCart(product);
+  };
+
   render() {
     return (
       <div className={s.Items}>
@@ -24,7 +34,6 @@ class Items extends PureComponent {
             const currencyIndex = products[CategoryIndex].prices.findIndex(
               (price) => price.currency.label === this.props.currency.label
             );
-
             return products.map((product, index) => {
               return (
                 <div
@@ -61,9 +70,7 @@ class Items extends PureComponent {
                     <button
                       className={s.AddToCart}
                       onClick={() => {
-                        debugger;
-                        this.props.onAddedToCart(product);
-                        console.log(product);
+                        this.getProductForAddingToCart(product.id);
                       }}
                     >
                       <img src={Cart} alt="Cart" />

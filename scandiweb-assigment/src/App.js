@@ -10,21 +10,27 @@ class App extends PureComponent {
   state = {
     currency: { label: "USD", symbol: "$" },
     cart: [],
+    productsCount: 0,
   };
 
   onAddedToCart = (product) => {
     this.state.cart.push(product);
+    this.productsCount();
   };
 
   onCurrencyChange = (selected) => {
     this.setState({ currency: selected });
   };
 
+  productsCount = () =>
+    this.setState({ productsCount: this.state.cart.length });
+
   render() {
     return (
       <>
         <Header
-          client={this.props.client}
+          products={this.state.cart}
+          productsCount={this.state.productsCount}
           onCurrencyChange={this.onCurrencyChange}
           currency={this.state.currency}
         />

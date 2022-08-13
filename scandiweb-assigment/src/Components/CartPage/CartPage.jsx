@@ -1,13 +1,33 @@
 import React, { PureComponent } from "react";
+import CartItem from "./CartItem/CartItem";
 import s from "./CartPage.module.css";
 
 class CartPage extends PureComponent {
   state = {
     currencyIndex: 0,
+    totalPrice: 0,
+    countOfProducts: this.props.products.length,
   };
-
   totalPrice = 0;
-
+  decrement = (count, price) => {
+    this.setState({
+      totalPrice: this.state.totalPrice - price * count,
+      countOfProducts: this.state.countOfProducts - 1,
+    });
+  };
+  increment = (count, price) => {
+    this.setState({
+      totalPrice: this.state.totalPrice - price + count * price,
+      countOfProducts: this.state.countOfProducts + 1,
+    });
+  };
+  addTotalPriceToState = () => {
+    if (this.state.totalPrice === 0) {
+      this.setState({
+        totalPrice: this.totalPrice,
+      });
+    }
+  };
   componentDidUpdate() {
     if (this.props.currency) {
       this.setState({
@@ -27,85 +47,16 @@ class CartPage extends PureComponent {
             {this.props.products.map((product, index) => {
               this.totalPrice +=
                 product.prices[this.state.currencyIndex].amount;
+              this.addTotalPriceToState();
               return (
-                <form className={s.Product} key={product.id + index}>
-                  <div className={s.ProductBrand}>
-                    {product.brand}
-                    <input
-                      type={"hidden"}
-                      name="ProductBrand"
-                      value={product.brand}
-                    />
-                  </div>
-                  <div className={s.ProductName}>
-                    {product.name}
-                    <input
-                      type={"hidden"}
-                      name="ProductName"
-                      value={product.name}
-                    />
-                  </div>
-                  <div className={s.PriceInfo}>
-                    {product.prices[this.state.currencyIndex].currency.symbol}
-                    {product.prices[this.state.currencyIndex].amount}
-                  </div>
-                  <div className={s.Attributes}>
-                    {product.attributes.map((attribute) => (
-                      <div key={attribute.id + index}>
-                        <div className={s.AttrbuteName}>{attribute.id}:</div>
-                        <div className={s.AttrbuteValues}>
-                          <fieldset id={attribute.id}>
-                            {attribute.items.map((item) =>
-                              attribute.id === "Color" ? (
-                                <div
-                                  key={item.value + index}
-                                  className={`${s.AttrbuteValue} ${s.Color}`}
-                                >
-                                  <label className={s.AttrbuteLabel}>
-                                    <input
-                                      style={{ display: "none" }}
-                                      type={"radio"}
-                                      name={attribute.id}
-                                      value={item.value}
-                                      required
-                                      className={s.AttributeIinput}
-                                    />
-                                    <div
-                                      className={s.AttributeBox}
-                                      style={{
-                                        background: item.value,
-                                      }}
-                                    ></div>
-                                  </label>
-                                  <div className={s.ColorWrapper}></div>
-                                </div>
-                              ) : (
-                                <div
-                                  key={item.value + index}
-                                  className={`${s.AttrbuteValue}`}
-                                >
-                                  <label className={s.AttrbuteLabel}>
-                                    <input
-                                      style={{ display: "none" }}
-                                      type={"radio"}
-                                      name={attribute.id}
-                                      value={item.value}
-                                      required
-                                      className={s.AttributeIinput}
-                                    />
-                                    <div className={s.AttributeBox}>
-                                      {item.value}
-                                    </div>
-                                  </label>
-                                </div>
-                              )
-                            )}
-                          </fieldset>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </form>
+                <CartItem
+                  increment={this.increment}
+                  decrement={this.decrement}
+                  location="cartPage"
+                  product={product}
+                  index={index}
+                  currencyIndex={this.state.currencyIndex}
+                />
               );
             })}
           </div>
@@ -117,18 +68,19 @@ class CartPage extends PureComponent {
                   <span>
                     {this.props.currency.symbol}
                     {(
-                      Math.round((this.totalPrice / 100) * 21 * 100) / 100
+                      Math.round((this.state.totalPrice / 100) * 21 * 100) / 100
                     ).toFixed(2)}
                   </span>
                 </div>
                 <div className={s.Quantity}>
-                  <div>Quantity:</div> <span>{this.props.products.length}</span>
+                  <div>Quantity:</div>
+                  <span>{this.state.countOfProducts}</span>
                 </div>
                 <div className={s.Total}>
                   <div>Total:</div>
                   <span>
                     {this.props.currency.symbol}
-                    {(Math.round(this.totalPrice * 100) / 100).toFixed(2)}
+                    {(Math.round(this.state.totalPrice * 100) / 100).toFixed(2)}
                   </span>
                 </div>
                 <div className={s.OrderButton}>

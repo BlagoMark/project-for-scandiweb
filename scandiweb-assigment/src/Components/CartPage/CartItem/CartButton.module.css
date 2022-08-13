@@ -1,0 +1,165 @@
+.Product {
+  margin-bottom: 40px;
+  display: flex;
+}
+
+.Product:last-child {
+  margin-bottom: 0;
+}
+
+.LeftSide {
+  width: 136px;
+  margin-right: 4px;
+}
+
+.RightSide {
+  max-height: 190px;
+  display: flex;
+}
+
+.ProductBrand,
+.ProductName {
+  font-weight: 300;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.ProductName {
+  margin-bottom: 4px;
+}
+
+.PriceInfo {
+  font-weight: 500;
+  font-size: 16px;
+  line-height: 160%;
+  color: #1d1f22;
+  margin-bottom: 8px;
+}
+
+.AttrbuteName {
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 16px;
+  color: #1d1f22;
+  margin-bottom: 8px;
+}
+
+.ProductAttributes {
+  margin-top: 43px;
+}
+
+.AttrbuteValues fieldset {
+  display: flex;
+  flex-wrap: wrap;
+  margin-bottom: 16px;
+}
+
+.AttrbuteValue {
+  margin-right: 8px;
+  margin-bottom: 8px;
+}
+
+.AttrbuteValue:last-child {
+  margin-right: 0;
+}
+
+.AttrbuteLabel {
+  width: 100%;
+  height: 100%;
+}
+
+.AttributeBox {
+  min-width: 24px;
+  min-height: 24px;
+  padding: 0 5px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 1px solid #1d1f22;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: "Source Sans Pro";
+  font-style: normal;
+  font-weight: 400;
+  font-size: 14px;
+  line-height: 160%;
+  color: #1d1f22;
+  transition: 0.3s;
+}
+
+.AttributeIinput:checked + .AttributeBox,
+.AttributeIinput:hover + .AttributeBox {
+  background: #1d1f22;
+  color: #fff;
+}
+
+.Color {
+  padding: 0;
+  width: 24px;
+  height: 24px;
+  position: relative;
+  z-index: 2;
+}
+
+.ColorWrapper {
+  position: absolute;
+  opacity: 0;
+  width: 28;
+  height: 28;
+  z-index: 1;
+  top: -2px;
+  left: -2px;
+  margin-right: 12px;
+  transition: 0.3s;
+  border: 1px solid #5ece7b;
+}
+
+.Color:hover .ColorWrapper {
+  width: 28px;
+  height: 28px;
+  opacity: 1;
+}
+
+.Color .AttrbuteLabel {
+  width: 100%;
+}
+
+.Color .AttributeBox {
+  width: 24px;
+  height: 24px;
+  padding: 0;
+  border: none;
+  border: #dadada 1px solid;
+}
+
+.Color .AttributeIinput:checked + .ColorWrapper {
+  width: 28px;
+  height: 28px;
+  opacity: 1;
+}
+
+.productPhoto {
+  margin-left: 24px;
+  max-height: 190px;
+  width: 121px;
+  text-align: center;
+  position: relative;
+}
+
+.Photo {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+}
+
+.productPhoto img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.SliderArrows {
+  display: none;
+}

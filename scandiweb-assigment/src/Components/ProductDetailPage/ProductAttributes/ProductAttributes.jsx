@@ -5,9 +5,6 @@ import s from "../ProductDetailPage.module.css";
 
 class ProductAttributes extends PureComponent {
   parse = require("html-react-parser");
-
-  // product = this.props.product;
-
   render() {
     return (
       <Query query={GET_PRODUCT} variables={{ id: this.props.getId() }}>
@@ -25,7 +22,7 @@ class ProductAttributes extends PureComponent {
                   <div className={s.AttrbuteName}>{attribute.id}:</div>
                   <div className={s.AttrbuteValues}>
                     <fieldset id={attribute.id}>
-                      {attribute.items.map((item) =>
+                      {attribute.items.map((item, index) =>
                         attribute.id === "Color" ? (
                           <div
                             key={item.value}
@@ -38,14 +35,15 @@ class ProductAttributes extends PureComponent {
                                 name={attribute.id}
                                 value={item.value}
                                 required
+                                defaultChecked={index === 0}
                                 className={s.AttributeIinput}
                               />
+                              <div className={s.ColorWrapper}></div>
                               <div
                                 className={s.AttributeBox}
                                 style={{ background: item.value }}
                               ></div>
                             </label>
-                            <div className={s.ColorWrapper}></div>
                           </div>
                         ) : (
                           <div
@@ -59,6 +57,7 @@ class ProductAttributes extends PureComponent {
                                 name={attribute.id}
                                 value={item.value}
                                 required
+                                defaultChecked={index === 0}
                                 className={s.AttributeIinput}
                               />
                               <div className={s.AttributeBox}>{item.value}</div>

@@ -1,0 +1,49 @@
+.Counter {
+  display: flex;
+  flex-direction: column;
+  height: 288px;
+  justify-content: space-between;
+  align-items: center;
+  font-weight: 500;
+  font-size: 24px;
+  line-height: 160%;
+  color: #1d1f22;
+}
+
+.Increment,
+.Decrement {
+  display: flex;
+  width: 45px;
+  height: 45px;
+  border: 1px solid #1d1f22;
+  line-height: 15px;
+  justify-content: center;
+  align-items: center;
+  font-size: 30px;
+  background: #fff;
+  cursor: pointer;
+}
+
+.Increment::after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  background: #1d1f22;
+  width: 15px;
+}
+
+.Increment::before {
+  position: absolute;
+  content: "";
+  height: 15px;
+  background: #1d1f22;
+  width: 1px;
+}
+
+.Decrement::after {
+  position: absolute;
+  content: "";
+  height: 1px;
+  background: #1d1f22;
+  width: 15px;
+}

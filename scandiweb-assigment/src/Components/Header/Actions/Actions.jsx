@@ -1,11 +1,20 @@
 import React from "react";
 import { PureComponent } from "react";
 import CurrencySwitcher from "./CurrencySwitcher/CurrencySwitcher";
-import Cart from "../../../Assets/img/Cart.svg";
 import s from "./Actions.module.css";
-import { NavLink } from "react-router-dom";
+import CartButton from "./CartButton/CartButton";
 
 class Actions extends PureComponent {
+  state = { currencyIndex: 0 };
+  componentDidUpdate() {
+    if (this.props.currency) {
+      this.setState({
+        currencyIndex: this.props.products[0].prices.findIndex(
+          (price) => price.currency.label === this.props.currency.label
+        ),
+      });
+    }
+  }
   render() {
     return (
       <div className={s.Actions}>
@@ -13,13 +22,12 @@ class Actions extends PureComponent {
           onCurrencyChange={this.props.onCurrencyChange}
           currency={this.props.currency}
         />
-        <div className={s.Cart}>
-          <button>
-            <img src={Cart} alt="Cart" />
-          </button>
-          <div className={s.CartCount}></div>
-          <NavLink to={"/cart"}>Cart</NavLink>
-        </div>
+        <CartButton
+          products={this.props.products}
+          productsCount={this.props.productsCount}
+          currency={this.props.currency}
+          currencyIndex={this.state.currencyIndex}
+        />
       </div>
     );
   }
