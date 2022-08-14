@@ -7,7 +7,7 @@ import s from "./Items.module.css";
 import { client } from "../../..";
 
 class Items extends PureComponent {
-  getProductForAddingToCart = async (id) => {
+  getProduct = async (id) => {
     let data = await client.query({
       query: GET_PRODUCT,
       variables: { id: id },
@@ -70,7 +70,7 @@ class Items extends PureComponent {
                     <button
                       className={s.AddToCart}
                       onClick={() => {
-                        this.getProductForAddingToCart(product.id);
+                        this.getProduct(product.id);
                       }}
                     >
                       <img src={Cart} alt="Cart" />

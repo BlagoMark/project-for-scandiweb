@@ -21,6 +21,7 @@ class Header extends PureComponent {
               productsCount={this.props.productsCount}
               onCurrencyChange={this.props.onCurrencyChange}
               currency={this.props.currency}
+              currencyIndex={this.props.currencyIndex}
             />
           </div>
         </div>

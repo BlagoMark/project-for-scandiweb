@@ -12,9 +12,9 @@ class CurrencySwitcher extends PureComponent {
     open: false,
   };
 
-  onSelectChange = (e) => {
-    this.props.onCurrencyChange(e);
-    this.setState({ selectedCurrency: e });
+  onSelectChange = (currency) => {
+    this.props.onCurrencyChange(currency);
+    this.setState({ selectedCurrency: currency });
   };
 
   hundleOnClick = (item) => {

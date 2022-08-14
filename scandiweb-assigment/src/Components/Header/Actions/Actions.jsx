@@ -7,7 +7,7 @@ import CartButton from "./CartButton/CartButton";
 class Actions extends PureComponent {
   state = { currencyIndex: 0 };
   componentDidUpdate() {
-    if (this.props.currency) {
+    if (this.props.currency && this.props.products.length !== 0) {
       this.setState({
         currencyIndex: this.props.products[0].prices.findIndex(
           (price) => price.currency.label === this.props.currency.label

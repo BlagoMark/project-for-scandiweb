@@ -11,6 +11,17 @@ class App extends PureComponent {
     currency: { label: "USD", symbol: "$" },
     cart: [],
     productsCount: 0,
+    currencyIndex: 0,
+  };
+
+  getCurrencyIndex = () => {
+    if (this.state.cart.length > 0) {
+      this.setState({
+        currencyIndex: this.state.cart[0].prices.findIndex(
+          (price) => price.currency.label === this.state.currency.label
+        ),
+      });
+    }
   };
 
   onAddedToCart = (product) => {
@@ -22,8 +33,9 @@ class App extends PureComponent {
     this.setState({ currency: selected });
   };
 
-  productsCount = () =>
+  productsCount = () => {
     this.setState({ productsCount: this.state.cart.length });
+  };
 
   render() {
     return (
@@ -57,8 +69,10 @@ class App extends PureComponent {
             path="/cart"
             element={
               <CartPage
+                getCurrencyIndex={this.getCurrencyIndex}
                 products={this.state.cart}
                 currency={this.state.currency}
+                currencyIndex={this.state.currencyIndex}
               />
             }
           />

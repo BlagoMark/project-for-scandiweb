@@ -8,12 +8,12 @@ class CartOverlay extends PureComponent {
   state = { totalPrice: 0 };
   totalPrice = 0;
   increment = (count, price) => {
-    this.totalPrice += count * price;
-    this.setState({ totalPrice: this.state.totalPrice + count * price });
+    this.setState({
+      totalPrice: this.state.totalPrice + price,
+    });
   };
   decrement = (count, price) => {
-    debugger;
-    this.setState({ totalPrice: count * price });
+    this.setState({ totalPrice: this.state.totalPrice - price });
   };
   addTotalPriceToState = () => {
     if (this.state.totalPrice === 0) {
@@ -40,6 +40,7 @@ class CartOverlay extends PureComponent {
               this.addTotalPriceToState();
               return (
                 <CartItem
+                  key={index}
                   increment={this.increment}
                   decrement={this.decrement}
                   location="cartButton"

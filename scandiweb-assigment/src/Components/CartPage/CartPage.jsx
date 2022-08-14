@@ -1,6 +1,7 @@
 import React, { PureComponent } from "react";
 import CartItem from "./CartItem/CartItem";
 import s from "./CartPage.module.css";
+import TotalPrice from "./TotalPrice/TotalPrice";
 
 class CartPage extends PureComponent {
   state = {
@@ -9,16 +10,16 @@ class CartPage extends PureComponent {
     countOfProducts: this.props.products.length,
   };
   totalPrice = 0;
-  decrement = (count, price) => {
-    this.setState({
-      totalPrice: this.state.totalPrice - price * count,
-      countOfProducts: this.state.countOfProducts - 1,
-    });
-  };
   increment = (count, price) => {
     this.setState({
-      totalPrice: this.state.totalPrice - price + count * price,
+      totalPrice: this.state.totalPrice + price,
       countOfProducts: this.state.countOfProducts + 1,
+    });
+  };
+  decrement = (count, price) => {
+    this.setState({
+      totalPrice: this.state.totalPrice - price,
+      countOfProducts: this.state.countOfProducts - 1,
     });
   };
   addTotalPriceToState = () => {
@@ -28,14 +29,11 @@ class CartPage extends PureComponent {
       });
     }
   };
+  componentDidMount() {
+    this.props.getCurrencyIndex();
+  }
   componentDidUpdate() {
-    if (this.props.currency) {
-      this.setState({
-        currencyIndex: this.props.products[0].prices.findIndex(
-          (price) => price.currency.label === this.props.currency.label
-        ),
-      });
-    }
+    this.props.getCurrencyIndex();
   }
 
   render() {
@@ -46,48 +44,29 @@ class CartPage extends PureComponent {
           <div className={s.Products}>
             {this.props.products.map((product, index) => {
               this.totalPrice +=
-                product.prices[this.state.currencyIndex].amount;
+                product.prices[this.props.currencyIndex].amount;
               this.addTotalPriceToState();
               return (
                 <CartItem
+                  key={index}
                   increment={this.increment}
                   decrement={this.decrement}
                   location="cartPage"
                   product={product}
                   index={index}
-                  currencyIndex={this.state.currencyIndex}
+                  currencyIndex={this.props.currencyIndex}
                 />
               );
             })}
           </div>
           {this.props.products[0] ? (
-            <>
-              <div className={s.TotalPrice}>
-                <div className={s.Tax}>
-                  <div>Tax 21%:</div>
-                  <span>
-                    {this.props.currency.symbol}
-                    {(
-                      Math.round((this.state.totalPrice / 100) * 21 * 100) / 100
-                    ).toFixed(2)}
-                  </span>
-                </div>
-                <div className={s.Quantity}>
-                  <div>Quantity:</div>
-                  <span>{this.state.countOfProducts}</span>
-                </div>
-                <div className={s.Total}>
-                  <div>Total:</div>
-                  <span>
-                    {this.props.currency.symbol}
-                    {(Math.round(this.state.totalPrice * 100) / 100).toFixed(2)}
-                  </span>
-                </div>
-                <div className={s.OrderButton}>
-                  <button>ORDER</button>
-                </div>
-              </div>
-            </>
+            <TotalPrice
+              currency={this.props.currency}
+              products={this.props.products}
+              getCurrencyIndex={this.props.getCurrencyIndex}
+              totalPrice={this.state.totalPrice}
+              countOfProducts={this.state.countOfProducts}
+            />
           ) : (
             <div className={s.NoProducts}>No products in cart yet</div>
           )}
