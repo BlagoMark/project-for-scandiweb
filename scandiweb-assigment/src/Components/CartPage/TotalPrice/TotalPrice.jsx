@@ -2,38 +2,9 @@ import React, { PureComponent } from "react";
 import s from "./TotalPrice.module.css";
 
 class TotalPrice extends PureComponent {
-  state = {
-    currencyIndex: 0,
-    totalPrice: 0,
-    countOfProducts: this.props.products.length,
-  };
-  totalPrice = 0;
-  increment = (count, price) => {
-    this.setState({
-      totalPrice: this.state.totalPrice + price,
-      countOfProducts: this.state.countOfProducts + 1,
-    });
-  };
-  decrement = (count, price) => {
-    this.setState({
-      totalPrice: this.state.totalPrice - price,
-      countOfProducts: this.state.countOfProducts - 1,
-    });
-  };
-  addTotalPriceToState = () => {
-    if (this.state.totalPrice === 0) {
-      this.setState({
-        totalPrice: this.totalPrice,
-      });
-    }
-  };
-  componentDidMount() {
-    this.props.getCurrencyIndex();
-  }
-  componentDidUpdate() {
-    this.props.getCurrencyIndex();
-  }
-
+  // componentDidUpdate(prevProps, prevState) {
+  //   debugger;
+  // }
   render() {
     return (
       <div className={s.TotalPrice}>

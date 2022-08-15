@@ -5,23 +5,25 @@ import TotalPrice from "./TotalPrice/TotalPrice";
 
 class CartPage extends PureComponent {
   state = {
-    currencyIndex: 0,
     totalPrice: 0,
     countOfProducts: this.props.products.length,
   };
   totalPrice = 0;
+
   increment = (count, price) => {
     this.setState({
       totalPrice: this.state.totalPrice + price,
       countOfProducts: this.state.countOfProducts + 1,
     });
   };
+
   decrement = (count, price) => {
     this.setState({
       totalPrice: this.state.totalPrice - price,
       countOfProducts: this.state.countOfProducts - 1,
     });
   };
+
   addTotalPriceToState = () => {
     if (this.state.totalPrice === 0) {
       this.setState({
@@ -29,11 +31,12 @@ class CartPage extends PureComponent {
       });
     }
   };
-  componentDidMount() {
-    this.props.getCurrencyIndex();
-  }
-  componentDidUpdate() {
-    this.props.getCurrencyIndex();
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevProps.currencyIndex !== this.props.currencyIndex) {
+      this.setState({ totalPrice: this.totalPrice });
+    }
+    this.totalPrice = 0;
   }
 
   render() {
@@ -61,9 +64,9 @@ class CartPage extends PureComponent {
           </div>
           {this.props.products[0] ? (
             <TotalPrice
+              currencyIndex={this.props.currencyIndex}
               currency={this.props.currency}
               products={this.props.products}
-              getCurrencyIndex={this.props.getCurrencyIndex}
               totalPrice={this.state.totalPrice}
               countOfProducts={this.state.countOfProducts}
             />

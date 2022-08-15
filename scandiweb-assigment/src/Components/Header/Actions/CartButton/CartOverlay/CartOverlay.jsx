@@ -15,13 +15,16 @@ class CartOverlay extends PureComponent {
   decrement = (count, price) => {
     this.setState({ totalPrice: this.state.totalPrice - price });
   };
-  addTotalPriceToState = () => {
+  updateTotalPriceInState = () => {
     if (this.state.totalPrice === 0) {
       this.setState({
         totalPrice: this.totalPrice,
       });
     }
   };
+  calculations(value) {
+    this.totalPrice += value;
+  }
   render() {
     return (
       <>
@@ -35,9 +38,10 @@ class CartOverlay extends PureComponent {
           </header>
           <div className={s.Items}>
             {this.props.products.map((product, index) => {
-              this.totalPrice +=
-                product.prices[this.props.currencyIndex].amount;
-              this.addTotalPriceToState();
+              this.calculations(
+                product.prices[this.props.currencyIndex].amount
+              );
+              this.updateTotalPriceInState();
               return (
                 <CartItem
                   key={index}
@@ -46,8 +50,8 @@ class CartOverlay extends PureComponent {
                   location="cartButton"
                   product={product}
                   index={index}
-                  currencyIndex={this.props.currencyIndex}
                   currency={this.props.currency}
+                  currencyIndex={this.props.currencyIndex}
                 />
               );
             })}

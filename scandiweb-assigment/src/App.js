@@ -14,16 +14,6 @@ class App extends PureComponent {
     currencyIndex: 0,
   };
 
-  getCurrencyIndex = () => {
-    if (this.state.cart.length > 0) {
-      this.setState({
-        currencyIndex: this.state.cart[0].prices.findIndex(
-          (price) => price.currency.label === this.state.currency.label
-        ),
-      });
-    }
-  };
-
   onAddedToCart = (product) => {
     this.state.cart.push(product);
     this.productsCount();
@@ -37,6 +27,16 @@ class App extends PureComponent {
     this.setState({ productsCount: this.state.cart.length });
   };
 
+  componentDidUpdate() {
+    if (this.state.currency && this.state.cart.length !== 0) {
+      this.setState({
+        currencyIndex: this.state.cart[0].prices.findIndex(
+          (price) => price.currency.label === this.state.currency.label
+        ),
+      });
+    }
+  }
+
   render() {
     return (
       <>
@@ -45,6 +45,7 @@ class App extends PureComponent {
           productsCount={this.state.productsCount}
           onCurrencyChange={this.onCurrencyChange}
           currency={this.state.currency}
+          currencyIndex={this.state.currencyIndex}
         />
         <Routes>
           <Route
@@ -69,7 +70,6 @@ class App extends PureComponent {
             path="/cart"
             element={
               <CartPage
-                getCurrencyIndex={this.getCurrencyIndex}
                 products={this.state.cart}
                 currency={this.state.currency}
                 currencyIndex={this.state.currencyIndex}

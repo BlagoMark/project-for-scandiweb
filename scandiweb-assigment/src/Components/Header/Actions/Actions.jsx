@@ -5,16 +5,6 @@ import s from "./Actions.module.css";
 import CartButton from "./CartButton/CartButton";
 
 class Actions extends PureComponent {
-  state = { currencyIndex: 0 };
-  componentDidUpdate() {
-    if (this.props.currency && this.props.products.length !== 0) {
-      this.setState({
-        currencyIndex: this.props.products[0].prices.findIndex(
-          (price) => price.currency.label === this.props.currency.label
-        ),
-      });
-    }
-  }
   render() {
     return (
       <div className={s.Actions}>
@@ -26,7 +16,7 @@ class Actions extends PureComponent {
           products={this.props.products}
           productsCount={this.props.productsCount}
           currency={this.props.currency}
-          currencyIndex={this.state.currencyIndex}
+          currencyIndex={this.props.currencyIndex}
         />
       </div>
     );

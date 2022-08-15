@@ -5,7 +5,6 @@ import ProductCounter from "../ProductCounter/ProductCounter";
 
 class CartItem extends PureComponent {
   state = {
-    currencyIndex: this.props.currencyIndex,
     product: this.props.product,
     photoIndex: 0,
     location: this.props.location,
@@ -109,7 +108,6 @@ class CartItem extends PureComponent {
             location={this.props.location}
             productCount={this.props.productCount}
           />
-          {/* <ProductPhotoForCart/> */}
           <div className={s.productPhoto}>
             <div className={s.Photo}>
               <img
