@@ -5,13 +5,14 @@ class AddToCartButton extends PureComponent {
   parse = require("html-react-parser");
 
   render() {
+    debugger;
     return (
       <div className={s.AddToCart}>
         <button
           disabled={!this.props.product.inStock}
           onClick={(e) => {
             e.preventDefault();
-            this.props.onAddedToCart(this.props.product);
+            this.props.onAddedToCart(this.props.product, this.props.attributes);
           }}
         >
           ADD TO CART

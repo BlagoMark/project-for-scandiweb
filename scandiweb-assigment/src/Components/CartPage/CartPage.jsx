@@ -47,7 +47,7 @@ class CartPage extends PureComponent {
           <div className={s.Products}>
             {this.props.products.map((product, index) => {
               this.totalPrice +=
-                product.prices[this.props.currencyIndex].amount;
+                product.product.prices[this.props.currencyIndex].amount;
               this.addTotalPriceToState();
               return (
                 <CartItem

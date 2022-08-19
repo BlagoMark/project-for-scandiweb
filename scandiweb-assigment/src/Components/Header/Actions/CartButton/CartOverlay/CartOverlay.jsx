@@ -39,7 +39,7 @@ class CartOverlay extends PureComponent {
           <div className={s.Items}>
             {this.props.products.map((product, index) => {
               this.calculations(
-                product.prices[this.props.currencyIndex].amount
+                product.product.prices[this.props.currencyIndex].amount
               );
               this.updateTotalPriceInState();
               return (

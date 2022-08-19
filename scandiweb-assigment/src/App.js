@@ -14,8 +14,9 @@ class App extends PureComponent {
     currencyIndex: 0,
   };
 
-  onAddedToCart = (product) => {
-    this.state.cart.push(product);
+  onAddedToCart = (product, attributes) => {
+    this.state.cart.push({ product: product, attributes: attributes });
+    console.log(this.state.cart);
     this.productsCount();
   };
 
@@ -30,7 +31,7 @@ class App extends PureComponent {
   componentDidUpdate() {
     if (this.state.currency && this.state.cart.length !== 0) {
       this.setState({
-        currencyIndex: this.state.cart[0].prices.findIndex(
+        currencyIndex: this.state.cart[0].product.prices.findIndex(
           (price) => price.currency.label === this.state.currency.label
         ),
       });

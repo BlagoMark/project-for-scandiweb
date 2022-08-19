@@ -6,6 +6,52 @@ import ProductPrice from "./ProductPrice/ProductPrice";
 
 class ProductInfo extends PureComponent {
   parse = require("html-react-parser");
+  state = { selectedProduct: { product: this.props.product, attributes: [] } };
+
+  setSelectedProduct = (product, attributes) => {
+    if (product && attributes) {
+      this.setState(
+        {
+          selectedProduct: {
+            product: product,
+            attributes: this.state.selectedProduct.attributes,
+          },
+        },
+        () => {
+          if (!this.state.selectedProduct.attributes.length) {
+            this.state.selectedProduct.attributes.push(attributes);
+          } else {
+            let newAttributes = [...this.state.selectedProduct.attributes];
+            for (let i = 0; i < newAttributes.length; i++) {
+              if (attributes.attributeName === newAttributes[i].attributeName) {
+                this.state.selectedProduct.attributes[i] = attributes;
+              } else {
+                let check = () => {
+                  let res = false;
+                  for (
+                    let i = 0;
+                    i < this.state.selectedProduct.attributes.length;
+                    i++
+                  ) {
+                    if (
+                      this.state.selectedProduct.attributes[i].attributeName ===
+                      attributes.attributeName
+                    ) {
+                      res = true;
+                    }
+                  }
+                  return res;
+                };
+                if (!check()) {
+                  this.state.selectedProduct.attributes.push(attributes);
+                }
+              }
+            }
+          }
+        }
+      );
+    }
+  };
 
   render() {
     return (
@@ -14,7 +60,7 @@ class ProductInfo extends PureComponent {
           {this.props.product.brand}
           <input
             type={"hidden"}
-            name="ProductBrand"
+            name={"ProductBrand"}
             value={this.props.product.brand}
           />
         </div>
@@ -22,11 +68,12 @@ class ProductInfo extends PureComponent {
           {this.props.product.name}
           <input
             type={"hidden"}
-            name="ProductName"
+            name={"ProductName"}
             value={this.props.product.name}
           />
         </div>
         <ProductAttributes
+          setSelectedProduct={this.setSelectedProduct}
           product={this.props.product}
           currencyIndex={this.props.currencyIndex}
           getId={this.props.getId}
@@ -37,6 +84,7 @@ class ProductInfo extends PureComponent {
         />
         <AddToCartButton
           product={this.props.product}
+          attributes={this.state.selectedProduct.attributes}
           onAddedToCart={this.props.onAddedToCart}
         />
         <div className={s.ProductDescriptionWrapper}>
