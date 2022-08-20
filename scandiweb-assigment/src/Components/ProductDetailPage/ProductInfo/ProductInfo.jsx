@@ -1,8 +1,8 @@
 import React, { PureComponent } from "react";
 import AddToCartButton from "../AddToCartButton/AddToCartButton";
 import ProductAttributes from "../ProductAttributes/ProductAttributes";
-import s from "./ProductInfo.module.css";
 import ProductPrice from "./ProductPrice/ProductPrice";
+import s from "./ProductInfo.module.css";
 
 class ProductInfo extends PureComponent {
   parse = require("html-react-parser");
@@ -24,6 +24,7 @@ class ProductInfo extends PureComponent {
             let newAttributes = [...this.state.selectedProduct.attributes];
             for (let i = 0; i < newAttributes.length; i++) {
               if (attributes.attributeName === newAttributes[i].attributeName) {
+                // eslint-disable-next-line react/no-direct-mutation-state
                 this.state.selectedProduct.attributes[i] = attributes;
               } else {
                 let check = () => {

@@ -5,7 +5,6 @@ class AddToCartButton extends PureComponent {
   parse = require("html-react-parser");
 
   render() {
-    debugger;
     return (
       <div className={s.AddToCart}>
         <button

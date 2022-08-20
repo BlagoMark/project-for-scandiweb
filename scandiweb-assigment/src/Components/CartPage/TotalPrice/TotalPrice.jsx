@@ -2,9 +2,6 @@ import React, { PureComponent } from "react";
 import s from "./TotalPrice.module.css";
 
 class TotalPrice extends PureComponent {
-  // componentDidUpdate(prevProps, prevState) {
-  //   debugger;
-  // }
   render() {
     return (
       <div className={s.TotalPrice}>

@@ -16,7 +16,6 @@ class App extends PureComponent {
 
   onAddedToCart = (product, attributes) => {
     this.state.cart.push({ product: product, attributes: attributes });
-    console.log(this.state.cart);
     this.productsCount();
   };
 

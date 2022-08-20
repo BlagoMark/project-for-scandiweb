@@ -68,7 +68,6 @@ class CartItem extends PureComponent {
                                 this.state.product.attributes[
                                   this.state.product.attributes.findIndex(
                                     (object) => {
-                                      debugger;
                                       return (
                                         object.attributeName === attribute.id
                                       );
