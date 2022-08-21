@@ -1,7 +1,9 @@
 import React, { PureComponent } from "react";
+import ProductCounter from "../ProductCounter/ProductCounter";
+import ProductAttributes from "./ProductAttributes/ProductAttributes";
+import ProductPhoto from "./ProductPhoto/ProductPhoto";
 import cartPage from "./CartPage.module.css";
 import cartButton from "./CartButton.module.css";
-import ProductCounter from "../ProductCounter/ProductCounter";
 
 class CartItem extends PureComponent {
   state = {
@@ -15,7 +17,6 @@ class CartItem extends PureComponent {
     if (this.state.location === "cartPage") {
       s = cartPage;
     }
-    debugger;
     return (
       <form
         className={s.Product}
@@ -45,104 +46,11 @@ class CartItem extends PureComponent {
             }
             {this.state.product.product.prices[this.props.currencyIndex].amount}
           </div>
-          <div className={s.Attributes}>
-            {this.state.product.product.attributes.map((attribute) => (
-              <div key={attribute.id + this.props.index}>
-                <div className={s.AttrbuteName}>{attribute.id}:</div>
-                <div className={s.AttrbuteValues}>
-                  <fieldset id={attribute.id}>
-                    {attribute.items.map((item, index) => {
-                      return attribute.id === "Color" ? (
-                        <div
-                          key={item.value}
-                          className={`${s.AttrbuteValue} ${s.Color}`}
-                        >
-                          <label className={s.AttrbuteLabel}>
-                            <input
-                              style={{ display: "none" }}
-                              type={"radio"}
-                              name={attribute.id}
-                              value={item.value}
-                              required
-                              defaultChecked={
-                                this.state.product.attributes[
-                                  this.state.product.attributes.findIndex(
-                                    (object) => {
-                                      return (
-                                        object.attributeName === attribute.id
-                                      );
-                                    }
-                                  )
-                                ]
-                                  ? index ===
-                                    this.state.product.attributes[
-                                      this.state.product.attributes.findIndex(
-                                        (object) => {
-                                          return (
-                                            object.attributeName ===
-                                            attribute.id
-                                          );
-                                        }
-                                      )
-                                    ].attributeValue
-                                  : index === 0
-                              }
-                              className={s.AttributeIinput}
-                            />
-                            <div className={s.ColorWrapper}></div>
-                            <div
-                              className={s.AttributeBox}
-                              style={{
-                                background: item.value,
-                              }}
-                            ></div>
-                          </label>
-                        </div>
-                      ) : (
-                        <div key={item.value} className={`${s.AttrbuteValue}`}>
-                          <label className={s.AttrbuteLabel}>
-                            <input
-                              style={{ display: "none" }}
-                              type={"radio"}
-                              name={attribute.id}
-                              value={item.value}
-                              required
-                              defaultChecked={
-                                this.state.product.attributes &&
-                                this.state.product.attributes[
-                                  this.state.product.attributes.findIndex(
-                                    (object) => {
-                                      return (
-                                        object.attributeName === attribute.id
-                                      );
-                                    }
-                                  )
-                                ]
-                                  ? index ===
-                                    this.state.product.attributes[
-                                      this.state.product.attributes.findIndex(
-                                        (object) => {
-                                          return (
-                                            object.attributeName ===
-                                            attribute.id
-                                          );
-                                        }
-                                      )
-                                    ].attributeValue
-                                  : index === 0
-                              }
-                              className={s.AttributeIinput}
-                            />
-                            <div className={s.AttributeBox}>{item.value}</div>
-                          </label>
-                        </div>
-                      );
-                    })}
-                  </fieldset>
-                </div>
-              </div>
-            ))}
-          </div>
+          <ProductAttributes
+            location={this.state.location}
+            product={this.props.product}
+            index={this.props.index}
+          />
         </div>
         <div className={s.RightSide}>
           <ProductCounter
@@ -154,43 +62,10 @@ class CartItem extends PureComponent {
             location={this.props.location}
             productCount={this.props.productCount}
           />
-          <div className={s.productPhoto}>
-            <div className={s.Photo}>
-              <img
-                src={this.state.product.product.gallery[this.state.photoIndex]}
-                alt=""
-              />
-            </div>
-            <div className={s.SliderArrows}>
-              <div
-                className={s.Prev}
-                onClick={() => {
-                  if (this.state.photoIndex > 0) {
-                    this.setState({
-                      photoIndex: this.state.photoIndex - 1,
-                    });
-                  }
-                }}
-              >
-                {"<"}
-              </div>
-              <div
-                className={s.Next}
-                onClick={() => {
-                  if (
-                    this.state.photoIndex <
-                    this.state.product.product.gallery.length - 1
-                  ) {
-                    this.setState({
-                      photoIndex: this.state.photoIndex + 1,
-                    });
-                  }
-                }}
-              >
-                {">"}
-              </div>
-            </div>
-          </div>
+          <ProductPhoto
+            product={this.state.product}
+            location={this.state.location}
+          />
         </div>
       </form>
     );

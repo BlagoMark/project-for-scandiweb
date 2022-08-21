@@ -1,10 +1,10 @@
 import React, { PureComponent } from "react";
+import { Route, Routes } from "react-router-dom";
 import Categories from "./Components/Categoties/Categoties";
 import Header from "./Components/Header/Header";
-import "./App.css";
 import ProductDetailPage from "./Components/ProductDetailPage/ProductDetailPage";
-import { Route, Routes } from "react-router-dom";
 import CartPage from "./Components/CartPage/CartPage";
+import "./App.css";
 
 class App extends PureComponent {
   state = {

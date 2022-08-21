@@ -1,9 +1,9 @@
 import { Query } from "@apollo/client/react/components";
 import React, { PureComponent } from "react";
 import { GET_PRODUCT } from "../../API/api";
-import s from "./ProductDetailPage.module.css";
 import ProductInfo from "./ProductInfo/ProductInfo";
 import ProductPhoto from "./ProductPhoto/ProductPhoto";
+import s from "./ProductDetailPage.module.css";
 
 class ProductDetailPage extends PureComponent {
   getId = () => {

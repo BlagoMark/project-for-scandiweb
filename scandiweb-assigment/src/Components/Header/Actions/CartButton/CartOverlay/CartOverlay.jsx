@@ -1,8 +1,8 @@
 import React from "react";
 import { PureComponent } from "react";
-import s from "./CartOverlay.module.css";
 import { NavLink } from "react-router-dom";
 import CartItem from "../../../../CartPage/CartItem/CartItem";
+import s from "./CartOverlay.module.css";
 
 class CartOverlay extends PureComponent {
   state = { totalPrice: 0 };

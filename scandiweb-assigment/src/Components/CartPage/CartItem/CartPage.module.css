@@ -196,4 +196,17 @@
   margin: 0 4px;
   justify-content: center;
   line-height: 24px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.Prev img,
+.Next img {
+  width: 6px;
+  height: 12px;
+}
+
+.Next img {
+  transform: rotate(180deg);
 }
