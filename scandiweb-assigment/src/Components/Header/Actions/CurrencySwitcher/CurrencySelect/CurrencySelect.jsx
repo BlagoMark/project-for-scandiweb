@@ -4,16 +4,16 @@ import arrow from "../../../../../Assets/img/CurrencyArrow.svg";
 import s from "./CurrencySelect.module.css";
 
 class CurrencySelect extends PureComponent {
-  toggle = (bool) => {
-    this.props.toggle(bool);
-  };
   render() {
     return (
-      <div
+      <button
         className={s.Select}
         onClick={() =>
-          this.props.open ? this.toggle(false) : this.toggle(true)
+          this.props.open ? this.props.toggle(false) : this.props.toggle(true)
         }
+        onBlur={() => {
+          setTimeout(() => this.props.toggle(false), 200);
+        }}
       >
         <div className={s.CurrencyHeaderTitle}>
           {this.props.selectedCurrency.symbol}
@@ -25,7 +25,7 @@ class CurrencySelect extends PureComponent {
             <img src={arrow} alt="" style={{ transform: "rotate(180deg)" }} />
           )}
         </div>
-      </div>
+      </button>
     );
   }
 }

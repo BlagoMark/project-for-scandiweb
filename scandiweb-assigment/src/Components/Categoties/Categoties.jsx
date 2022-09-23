@@ -24,6 +24,7 @@ class Categories extends PureComponent {
                   path={`/${category.name}`}
                   element={
                     <Category
+                      setProductCount={this.props.setProductCount}
                       onAddedToCart={this.props.onAddedToCart}
                       currency={this.props.currency}
                       name={category.name}

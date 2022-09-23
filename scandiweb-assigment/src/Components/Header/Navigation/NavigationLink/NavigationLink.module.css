@@ -23,7 +23,7 @@
   width: 100%;
   transform: scaleX(0);
   height: 2px;
-  bottom: 0;
+  bottom: 2px;
   left: 0;
   background-color: #5ece7b;
   transform-origin: bottom right;

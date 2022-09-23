@@ -1,0 +1,16 @@
+.Carousel {
+  height: 100%;
+  width: 200px;
+}
+
+.Window {
+  height: 100%;
+  width: 100%;
+  overflow: hidden;
+}
+
+.PhotosContainer {
+  height: 100%;
+  display: flex;
+  transition: 0.3s;
+}

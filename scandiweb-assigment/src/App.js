@@ -15,8 +15,25 @@ class App extends PureComponent {
   };
 
   onAddedToCart = (product, attributes) => {
-    this.state.cart.push({ product: product, attributes: attributes });
+    let newProduct = { product: product, attributes: attributes };
+    let newCart = [...this.state.cart];
+    newCart[this.state.cart.length] = newProduct;
+    this.setState({ cart: newCart });
     this.productsCount();
+  };
+
+  deleteCartItem = (product) => {
+    let remainingArr = this.state.cart.filter((data) => {
+      if (product.attributes) {
+        return (
+          data.product.id !== product.product.id &&
+          data.attributes[0] !== product.attributes[0]
+        );
+      } else {
+        return data.product.id !== product.product.id;
+      }
+    });
+    this.setState({ cart: remainingArr });
   };
 
   onCurrencyChange = (selected) => {
@@ -28,6 +45,7 @@ class App extends PureComponent {
   };
 
   componentDidUpdate() {
+    this.setState({ productsCount: this.state.cart.length });
     if (this.state.currency && this.state.cart.length !== 0) {
       this.setState({
         currencyIndex: this.state.cart[0].product.prices.findIndex(
@@ -37,10 +55,15 @@ class App extends PureComponent {
     }
   }
 
+  setProductCount = (id, count) => {
+    return count;
+  };
+
   render() {
     return (
       <>
         <Header
+          deleteCartItem={this.deleteCartItem}
           products={this.state.cart}
           productsCount={this.state.productsCount}
           onCurrencyChange={this.onCurrencyChange}
@@ -52,6 +75,7 @@ class App extends PureComponent {
             path="/*"
             element={
               <Categories
+                setProductCount={this.setProductCount}
                 onAddedToCart={this.onAddedToCart}
                 currency={this.state.currency}
               />
@@ -70,6 +94,7 @@ class App extends PureComponent {
             path="/cart"
             element={
               <CartPage
+                deleteCartItem={this.deleteCartItem}
                 products={this.state.cart}
                 currency={this.state.currency}
                 currencyIndex={this.state.currencyIndex}

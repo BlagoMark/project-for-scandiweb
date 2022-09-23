@@ -9,6 +9,7 @@ class Category extends PureComponent {
         <div className="container">
           <div className={s.CategoryName}>{this.props.name}</div>
           <Items
+            setProductCount={this.props.setProductCount}
             onAddedToCart={this.props.onAddedToCart}
             name={this.props.name}
             currency={this.props.currency}

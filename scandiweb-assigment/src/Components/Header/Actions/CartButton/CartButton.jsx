@@ -26,6 +26,7 @@ class CartButton extends PureComponent {
         </div>
         {this.state.CartOverlayOpened ? (
           <CartOverlay
+            deleteCartItem={this.props.deleteCartItem}
             currencyIndex={this.props.currencyIndex}
             location="cartButton"
             products={this.props.products}

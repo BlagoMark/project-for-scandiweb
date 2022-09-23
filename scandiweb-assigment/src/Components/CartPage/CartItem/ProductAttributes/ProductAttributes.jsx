@@ -28,31 +28,65 @@ class ProductAttributes extends PureComponent {
                           name={attribute.id}
                           value={item.value}
                           required
+                          checked={
+                            this.props.location !== "cartPage"
+                              ? this.props.product.attributes
+                                ? this.props.product.attributes[
+                                    this.props.product.attributes.findIndex(
+                                      (object) => {
+                                        return (
+                                          object.attributeName === attribute.id
+                                        );
+                                      }
+                                    )
+                                  ]
+                                  ? index ===
+                                    this.props.product.attributes[
+                                      this.props.product.attributes.findIndex(
+                                        (object) => {
+                                          return (
+                                            object.attributeName ===
+                                            attribute.id
+                                          );
+                                        }
+                                      )
+                                    ].attributeValue
+                                  : index === 0
+                                : index === 0
+                              : null
+                          }
                           defaultChecked={
-                            this.props.product.attributes[
-                              this.props.product.attributes.findIndex(
-                                (object) => {
-                                  return object.attributeName === attribute.id;
-                                }
-                              )
-                            ]
-                              ? index ===
-                                this.props.product.attributes[
-                                  this.props.product.attributes.findIndex(
-                                    (object) => {
-                                      return (
-                                        object.attributeName === attribute.id
-                                      );
-                                    }
-                                  )
-                                ].attributeValue
-                              : index === 0
+                            this.props.location === "cartPage"
+                              ? this.props.product.attributes
+                                ? this.props.product.attributes[
+                                    this.props.product.attributes.findIndex(
+                                      (object) => {
+                                        return (
+                                          object.attributeName === attribute.id
+                                        );
+                                      }
+                                    )
+                                  ]
+                                  ? index ===
+                                    this.props.product.attributes[
+                                      this.props.product.attributes.findIndex(
+                                        (object) => {
+                                          return (
+                                            object.attributeName ===
+                                            attribute.id
+                                          );
+                                        }
+                                      )
+                                    ].attributeValue
+                                  : index === 0
+                                : index === 0
+                              : null
                           }
                           className={s.AttributeIinput}
                         />
                         <div className={s.ColorWrapper}></div>
                         <div
-                          className={s.AttributeBox}
+                          className={`${s.AttributeBox} ${s.ColorBox}`}
                           style={{
                             background: item.value,
                           }}
@@ -68,25 +102,58 @@ class ProductAttributes extends PureComponent {
                           name={attribute.id}
                           value={item.value}
                           required
+                          checked={
+                            this.props.location !== "cartPage"
+                              ? this.props.product.attributes
+                                ? this.props.product.attributes[
+                                    this.props.product.attributes.findIndex(
+                                      (object) => {
+                                        return (
+                                          object.attributeName === attribute.id
+                                        );
+                                      }
+                                    )
+                                  ]
+                                  ? index ===
+                                    this.props.product.attributes[
+                                      this.props.product.attributes.findIndex(
+                                        (object) => {
+                                          return (
+                                            object.attributeName ===
+                                            attribute.id
+                                          );
+                                        }
+                                      )
+                                    ].attributeValue
+                                  : index === 0
+                                : index === 0
+                              : null
+                          }
                           defaultChecked={
-                            this.props.product.attributes &&
-                            this.props.product.attributes[
-                              this.props.product.attributes.findIndex(
-                                (object) => {
-                                  return object.attributeName === attribute.id;
-                                }
-                              )
-                            ]
-                              ? index ===
-                                this.props.product.attributes[
-                                  this.props.product.attributes.findIndex(
-                                    (object) => {
-                                      return (
-                                        object.attributeName === attribute.id
-                                      );
-                                    }
-                                  )
-                                ].attributeValue
+                            this.props.location === "cartPage"
+                              ? this.props.product.attributes
+                                ? this.props.product.attributes[
+                                    this.props.product.attributes.findIndex(
+                                      (object) => {
+                                        return (
+                                          object.attributeName === attribute.id
+                                        );
+                                      }
+                                    )
+                                  ]
+                                  ? index ===
+                                    this.props.product.attributes[
+                                      this.props.product.attributes.findIndex(
+                                        (object) => {
+                                          return (
+                                            object.attributeName ===
+                                            attribute.id
+                                          );
+                                        }
+                                      )
+                                    ].attributeValue
+                                  : index === 0
+                                : index === 0
                               : index === 0
                           }
                           className={s.AttributeIinput}

@@ -210,3 +210,12 @@
 .Next img {
   transform: rotate(180deg);
 }
+
+.CarouselItem {
+  width: 200px;
+}
+
+.CarouselItem img {
+  object-fit: contain;
+  width: 200px;
+}

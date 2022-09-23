@@ -13,6 +13,7 @@ class Actions extends PureComponent {
           currency={this.props.currency}
         />
         <CartButton
+          deleteCartItem={this.props.deleteCartItem}
           products={this.props.products}
           productsCount={this.props.productsCount}
           currency={this.props.currency}

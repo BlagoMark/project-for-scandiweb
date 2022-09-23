@@ -165,6 +165,7 @@ button[disabled] {
   margin-top: 40px;
   max-height: 155px;
   overflow: auto;
+  padding: 0px 20px;
 }
 
 .ProductDescription p,

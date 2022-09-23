@@ -4,7 +4,7 @@ import cartButton from "./cartButton.module.css";
 
 class ProductCounter extends PureComponent {
   state = {
-    productCount: 1,
+    productCount: this.props.count[1],
     location: this.props.location,
   };
 
@@ -31,12 +31,15 @@ class ProductCounter extends PureComponent {
         <div
           className={s.Decrement}
           onClick={() => {
-            if (this.state.productCount > 1) {
+            if (this.state.productCount > 0) {
               this.setState({ productCount: this.state.productCount - 1 });
               this.props.decrement(
                 this.state.productCount - 1,
                 this.props.productPrice
               );
+            }
+            if (this.state.productCount <= 1) {
+              this.props.deleteCartItem(this.props.product);
             }
           }}
         ></div>

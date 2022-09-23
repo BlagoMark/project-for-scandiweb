@@ -14,6 +14,10 @@
   padding-left: 10px;
   margin-right: 10px;
   cursor: pointer;
+  background: #fff;
+  border: none;
+  display: flex;
+  align-items: center;
 }
 
 .Select:focus {
@@ -22,6 +26,6 @@
 
 .Arrow {
   position: absolute;
-  top: 0px;
+  top: -2px;
   right: 0;
 }

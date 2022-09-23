@@ -17,6 +17,7 @@ class Header extends PureComponent {
               </div>
             </div>
             <Actions
+              deleteCartItem={this.props.deleteCartItem}
               products={this.props.products}
               productsCount={this.props.productsCount}
               onCurrencyChange={this.props.onCurrencyChange}

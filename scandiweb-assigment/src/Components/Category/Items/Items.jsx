@@ -1,82 +1,43 @@
 import React, { PureComponent } from "react";
 import { GET_PRODUCT, GET_PRODUCTS } from "../../../API/api";
 import { Query } from "@apollo/client/react/components";
-import { NavLink } from "react-router-dom";
-import Cart from "../../../Assets/img/Cart.svg";
 import s from "./Items.module.css";
 import { client } from "../../..";
+import Product from "./Product/Product";
 
 class Items extends PureComponent {
-  getProduct = async (id) => {
-    let data = await client.query({
-      query: GET_PRODUCT,
-      variables: { id: id },
-    });
-    let product = data.data.product;
-    this.props.onAddedToCart(product);
-  };
-
   render() {
     return (
       <div className={s.Items}>
-        <Query query={GET_PRODUCTS}>
-          {({ loading, error, data }) => {
+        <Query query={GET_PRODUCTS} variables={{ category: this.props.name }}>
+          {({ loading, error, data, refetch }) => {
             if (loading) {
               return "Loading...";
             }
             if (error) {
               return "Error...";
             }
-            const CategoryIndex = data.categories.findIndex(
-              (category) => category.name === this.props.name.toLowerCase()
-            );
-            const products = data.categories[CategoryIndex].products;
-            const currencyIndex = products[CategoryIndex].prices.findIndex(
+            const getProduct = async (id) => {
+              const data = await client.query({
+                query: GET_PRODUCT,
+                variables: { id: id },
+                fetchPolicy: "network-only",
+              });
+              this.props.onAddedToCart(data.data.product);
+            };
+            const products = data.category.products;
+            const currencyIndex = data.category.products[0].prices.findIndex(
               (price) => price.currency.label === this.props.currency.label
             );
             return products.map((product, index) => {
               return (
-                <div
-                  key={index}
-                  className={
-                    product.inStock ? `${s.Item}` : `${s.OutOfStock} ${s.Item}`
-                  }
-                >
-                  {/* Product Photo */}
-                  <NavLink to={`/product/${product.id}`}>
-                    <div className={s.Photo}>
-                      <img src={product.gallery[0]} alt={product.name} />
-                      {product.inStock ? null : (
-                        <div className={s.SoldOut}>OUT OF STOCK</div>
-                      )}
-                    </div>
-                  </NavLink>
-
-                  {/* Product Name */}
-                  <NavLink to={`/product/${product.id}`}>
-                    <div className={s.Name}>
-                      <h3>{product.name}</h3>
-                    </div>
-                  </NavLink>
-
-                  {/* Product Price */}
-                  <div className={s.Price}>
-                    {product.prices[currencyIndex].currency.symbol +
-                      product.prices[currencyIndex].amount}
-                  </div>
-
-                  {/* Product Cart */}
-                  {product.inStock ? (
-                    <button
-                      className={s.AddToCart}
-                      onClick={() => {
-                        this.getProduct(product.id);
-                      }}
-                    >
-                      <img src={Cart} alt="Cart" />
-                    </button>
-                  ) : null}
-                </div>
+                <Product
+                  setProductCount={this.props.setProductCount}
+                  index={index}
+                  getProduct={getProduct}
+                  product={product}
+                  currencyIndex={currencyIndex}
+                ></Product>
               );
             });
           }}

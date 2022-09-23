@@ -7,6 +7,7 @@ class CartPage extends PureComponent {
   state = {
     totalPrice: 0,
     countOfProducts: this.props.products.length,
+    products: this.props.products,
   };
   totalPrice = 0;
 
@@ -20,7 +21,7 @@ class CartPage extends PureComponent {
   decrement = (count, price) => {
     this.setState({
       totalPrice: this.state.totalPrice - price,
-      countOfProducts: this.state.countOfProducts - 1,
+      countOfProducts: count,
     });
   };
 
@@ -33,10 +34,49 @@ class CartPage extends PureComponent {
   };
 
   componentDidUpdate(prevProps, prevState) {
+    if (prevProps.products !== this.props.products) {
+      this.setState({ products: this.props.products });
+      this.state.products.map((product, index) => {
+        this.totalPrice +=
+          product.product.prices[this.props.currencyIndex].amount;
+        this.addTotalPriceToState();
+        return [];
+      });
+      this.findSameProducts();
+    }
     if (prevProps.currencyIndex !== this.props.currencyIndex) {
       this.setState({ totalPrice: this.totalPrice });
     }
     this.totalPrice = 0;
+  }
+
+  counts = [];
+
+  findSameProducts() {
+    this.setState({ products: this.props.products });
+    if (this.state.products.length) {
+      let unique = Array.from(
+        new Set(this.props.products.map(JSON.stringify))
+      ).map(JSON.parse);
+      if (this.state.products !== unique) {
+        this.setState({ products: unique });
+      }
+    }
+    this.counts = this.state.products.reduce((acc, curr) => {
+      const str = JSON.stringify(curr);
+      acc[str] = (acc[str] || 0) + 1;
+      return acc;
+    }, {});
+  }
+
+  componentWillMount() {
+    this.state.products.map((product) => {
+      this.totalPrice +=
+        product.product.prices[this.props.currencyIndex].amount;
+      this.addTotalPriceToState();
+      return [];
+    });
+    this.findSameProducts();
   }
 
   render() {
@@ -45,12 +85,11 @@ class CartPage extends PureComponent {
         <div className="container">
           <div className={s.CartTitle}>Cart</div>
           <div className={s.Products}>
-            {this.props.products.map((product, index) => {
-              this.totalPrice +=
-                product.product.prices[this.props.currencyIndex].amount;
-              this.addTotalPriceToState();
+            {this.state.products.map((product, index) => {
               return (
                 <CartItem
+                  count={Object.entries(this.counts)}
+                  deleteCartItem={this.props.deleteCartItem}
                   key={index}
                   increment={this.increment}
                   decrement={this.decrement}
