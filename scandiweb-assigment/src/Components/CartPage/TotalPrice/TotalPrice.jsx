@@ -2,6 +2,18 @@ import React, { PureComponent } from "react";
 import s from "./TotalPrice.module.css";
 
 class TotalPrice extends PureComponent {
+  state = {
+    totalPrice: this.props.totalPrice,
+    countOfProducts: this.props.countOfProducts,
+  };
+  componentDidUpdate(prevProps, prevState) {
+    if (this.state.totalPrice !== this.props.totalPrice) {
+      this.setState({ totalPrice: this.props.totalPrice });
+    }
+    if (this.state.countOfProducts !== this.props.countOfProducts) {
+      this.setState({ countOfProducts: this.props.countOfProducts });
+    }
+  }
   render() {
     return (
       <div className={s.TotalPrice}>
@@ -16,7 +28,7 @@ class TotalPrice extends PureComponent {
         </div>
         <div className={s.Quantity}>
           <div>Quantity:</div>
-          <span>{this.props.countOfProducts}</span>
+          <span>{this.state.countOfProducts}</span>
         </div>
         <div className={s.Total}>
           <div>Total:</div>

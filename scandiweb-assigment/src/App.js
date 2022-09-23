@@ -5,6 +5,7 @@ import Header from "./Components/Header/Header";
 import ProductDetailPage from "./Components/ProductDetailPage/ProductDetailPage";
 import CartPage from "./Components/CartPage/CartPage";
 import "./App.css";
+import CartWrapper from "./Components/Cart/CartWrapper";
 
 class App extends PureComponent {
   state = {
@@ -93,11 +94,19 @@ class App extends PureComponent {
           <Route
             path="/cart"
             element={
-              <CartPage
+              // <CartPage
+              //   deleteCartItem={this.deleteCartItem}
+              //   products={this.state.cart}
+              //   currency={this.state.currency}
+              //   currencyIndex={this.state.currencyIndex}
+              // />
+              <CartWrapper
+                location={"cartPage"}
                 deleteCartItem={this.deleteCartItem}
                 products={this.state.cart}
                 currency={this.state.currency}
                 currencyIndex={this.state.currencyIndex}
+                productsCount={this.state.productsCount}
               />
             }
           />

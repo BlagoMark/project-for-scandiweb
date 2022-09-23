@@ -1,8 +1,8 @@
 import React from "react";
 import { PureComponent } from "react";
 import Cart from "../../../../Assets/img/Cart.svg";
+import CartWrapper from "../../../Cart/CartWrapper";
 import s from "./CartButton.module.css";
-import CartOverlay from "./CartOverlay/CartOverlay";
 
 class CartButton extends PureComponent {
   state = { CartOverlayOpened: false };
@@ -25,7 +25,7 @@ class CartButton extends PureComponent {
           ) : null}
         </div>
         {this.state.CartOverlayOpened ? (
-          <CartOverlay
+          <CartWrapper
             deleteCartItem={this.props.deleteCartItem}
             currencyIndex={this.props.currencyIndex}
             location="cartButton"

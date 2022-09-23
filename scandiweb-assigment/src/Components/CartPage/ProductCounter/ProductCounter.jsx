@@ -4,13 +4,28 @@ import cartButton from "./cartButton.module.css";
 
 class ProductCounter extends PureComponent {
   state = {
-    productCount: this.props.count[1],
-    location: this.props.location,
+    productCount: 1,
   };
+
+  setCountToState = () => {
+    if (this.props.count) {
+      this.setState({ productCount: this.props.count[1] });
+    }
+  };
+
+  componentDidUpdate(prevProps, prevState) {
+    if (prevState.productCount !== this.state.productCount) {
+      this.setState({ productCount: this.state.productCount });
+    }
+  }
+
+  componentDidMount() {
+    this.setCountToState();
+  }
 
   render() {
     let s = cartPage;
-    if (this.state.location !== "cartPage") {
+    if (this.props.location !== "cartPage") {
       s = cartButton;
     } else {
       s = cartPage;
